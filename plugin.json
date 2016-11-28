@@ -1,1 +1,18 @@
-{}
+{
+  "name": "Content Export",
+  "description": {
+    "en": "Subsystem for content exporting",
+    "ru": "Подсистема экспорта контента",
+    "uk": "Підсистема експорту контенту"
+  },
+  "url": "https://github.com/pytsite/plugin-content_export",
+  "author": {
+    "name": "Alexander Shepetko",
+    "email": "a@shepetko.com",
+    "url": "https://shepetko.com"
+  },
+  "requires": {
+    "packages": [],
+    "plugins": []
+  }
+}
