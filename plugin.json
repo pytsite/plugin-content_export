@@ -1,5 +1,5 @@
 {
-  "name": "Content Export",
+  "hidden": true,
   "description": {
     "en": "Subsystem for content exporting",
     "ru": "Подсистема экспорта контента",
