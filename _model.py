@@ -2,9 +2,10 @@
 """
 from datetime import datetime as _datetime
 from frozendict import frozendict as _frozendict
-from pytsite import odm_ui as _odm_ui, auth as _auth, content as _content, odm as _odm, router as _router, \
+from pytsite import odm_ui as _odm_ui, auth as _auth, odm as _odm, router as _router, \
     widget as _widget, util as _util, form as _form, lang as _lang, validation as _validation, \
     auth_storage_odm as _auth_storage_odm
+from plugins import content as _content
 from . import _widget as _content_export_widget, _api
 
 __author__ = 'Alexander Shepetko'

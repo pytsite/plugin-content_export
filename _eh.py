@@ -1,7 +1,8 @@
 """PytSite Content Export Event Handlers.
 """
 from datetime import datetime as _datetime, timedelta as _timedelta
-from pytsite import reg as _reg, odm as _odm, content as _content, logger as _logger
+from pytsite import reg as _reg, odm as _odm, logger as _logger
+from plugins import content as _content
 from . import _error, _api
 
 __author__ = 'Alexander Shepetko'

@@ -1,9 +1,9 @@
 {
   "hidden": true,
   "description": {
-    "en": "Subsystem for content exporting",
-    "ru": "Подсистема экспорта контента",
-    "uk": "Підсистема експорту контенту"
+    "en": "Content export",
+    "ru": "Экспорт контента",
+    "uk": "Експорт контенту"
   },
   "url": "https://github.com/pytsite/plugin-content_export",
   "author": {
@@ -13,6 +13,8 @@
   },
   "requires": {
     "packages": [],
-    "plugins": []
+    "plugins": [
+      "content"
+    ]
   }
 }

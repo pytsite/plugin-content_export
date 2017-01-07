@@ -38,7 +38,7 @@ class Abstract(_ABC):
     def export(self, entity, exporter):
         """ Performs export.
 
-        :type entity: pytsite.content.model.Content
+        :type entity: plugins.content.model.Content
         :type exporter: pytsite.content_export.model.ContentExport
         """
         pass

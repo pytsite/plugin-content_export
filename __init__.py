@@ -15,7 +15,6 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 # Resources
-_lang.register_package(__name__)  # Required by odm_auth while model registration
 _lang.register_package(__name__, alias='content_export')
 
 # Permission group
@@ -32,5 +31,5 @@ m = 'content_export'
 _admin.sidebar.add_menu(sid='content', mid=m, title=__name__ + '@export',
                         href=_router.ep_path('pytsite.odm_ui@browse', {'model': m}),
                         icon='fa fa-bullhorn',
-                        permissions=('pytsite.odm_perm.view.' + m, 'pytsite.odm_perm.view_own.' + m),
+                        permissions=('pytsite.odm_auth.view.' + m, 'pytsite.odm_auth.view_own.' + m),
                         weight=100)
