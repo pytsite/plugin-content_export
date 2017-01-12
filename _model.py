@@ -129,96 +129,87 @@ class ContentExport(_odm_ui.model.UIEntity):
     def odm_ui_m_form_setup(self, frm: _form.Form):
         """Hook.
         """
-        frm.reload_on_forward = True
         frm.steps = 2
 
     def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
         """Hook.
         """
-        frm.add_widget(_widget.select.Checkbox(
-            weight=10,
-            uid='enabled',
-            label=self.t('enabled'),
-            value=self.enabled,
-        ))
+        if frm.step == 1:
+            frm.add_widget(_widget.select.Checkbox(
+                weight=10,
+                uid='enabled',
+                label=self.t('enabled'),
+                value=self.enabled,
+            ))
 
-        frm.add_widget(_widget.select.Checkbox(
-            weight=20,
-            uid='process_all_authors',
-            label=self.t('process_all_authors'),
-            value=self.process_all_authors,
-        ))
+            frm.add_widget(_widget.select.Checkbox(
+                weight=20,
+                uid='process_all_authors',
+                label=self.t('process_all_authors'),
+                value=self.process_all_authors,
+            ))
 
-        frm.add_widget(_widget.select.Checkbox(
-            weight=30,
-            uid='with_images_only',
-            label=self.t('with_images_only'),
-            value=self.with_images_only,
-        ))
+            frm.add_widget(_widget.select.Checkbox(
+                weight=30,
+                uid='with_images_only',
+                label=self.t('with_images_only'),
+                value=self.with_images_only,
+            ))
 
-        frm.add_widget(_content.widget.ModelSelect(
-            weight=40,
-            uid='content_model',
-            label=self.t('content_model'),
-            value=self.content_model,
-            h_size='col-sm-4',
-            required=True,
-        ))
+            frm.add_widget(_content.widget.ModelSelect(
+                weight=40,
+                uid='content_model',
+                label=self.t('content_model'),
+                value=self.content_model,
+                h_size='col-sm-4',
+                required=True,
+            ))
 
-        frm.add_widget(_content_export_widget.DriverSelect(
-            weight=50,
-            uid='driver',
-            label=self.t('driver'),
-            value=self.driver,
-            h_size='col-sm-4',
-            required=True,
-        ))
+            frm.add_widget(_content_export_widget.DriverSelect(
+                weight=50,
+                uid='driver',
+                label=self.t('driver'),
+                value=self.driver,
+                h_size='col-sm-4',
+                required=True,
+            ))
 
-        frm.add_widget(_widget.input.Integer(
-            weight=60,
-            uid='max_age',
-            label=self.t('max_age'),
-            value=self.max_age,
-            h_size='col-sm-1',
-        ))
+            frm.add_widget(_widget.input.Integer(
+                weight=60,
+                uid='max_age',
+                label=self.t('max_age'),
+                value=self.max_age,
+                h_size='col-sm-1',
+            ))
 
-        frm.add_widget(_widget.input.Tokens(
-            weight=70,
-            uid='add_tags',
-            label=self.t('additional_tags'),
-            value=self.add_tags,
-        ))
+            frm.add_widget(_widget.input.Tokens(
+                weight=70,
+                uid='add_tags',
+                label=self.t('additional_tags'),
+                value=self.add_tags,
+            ))
 
-        frm.add_widget(_widget.select.DateTime(
-            weight=80,
-            uid='paused_till',
-            label=self.t('paused_till'),
-            value=self.paused_till,
-            h_size='col-sm-5 col-md-4 col-lg-3',
-        ))
+            frm.add_widget(_widget.select.DateTime(
+                weight=80,
+                uid='paused_till',
+                label=self.t('paused_till'),
+                value=self.paused_till,
+                h_size='col-sm-5 col-md-4 col-lg-3',
+            ))
 
-        frm.add_widget(_widget.input.Integer(
-            weight=90,
-            uid='errors',
-            label=self.t('errors'),
-            value=self.errors,
-            h_size='col-sm-1',
-        ))
+            frm.add_widget(_widget.input.Integer(
+                weight=90,
+                uid='errors',
+                label=self.t('errors'),
+                value=self.errors,
+                h_size='col-sm-1',
+            ))
 
-        # Placeholder widget to give ability to save data while form submit
-        frm.add_widget(_widget.input.Hidden(
-            weight=100,
-            uid='driver_opts',
-        ))
-
-        # Replace placeholder widget with real widget provided from driver
-        if frm.step == 2:
+        elif frm.step == 2:
             driver = _api.get_driver(_router.request().inp.get('driver'))
             settings_widget = driver.get_settings_widget(self.driver_opts)
             settings_widget.uid = 'driver_opts'
-            settings_widget.form_step = 2
-            frm.replace_widget('driver_opts', settings_widget)
-            frm.add_rule('driver_opts', _validation.rule.NonEmpty())
+            frm.add_widget(settings_widget)
 
     def odm_ui_mass_action_entity_description(self) -> str:
         """Get description for mass action form.

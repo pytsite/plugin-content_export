@@ -3,6 +3,10 @@
 
 ## Changelog
 
+### 0.2.1 (2017-01-12)
+Fixed model's form widgets setup.
+
+
 ### 0.2 (2017-01-08)
 Support of `content` as separate plugin.
 
