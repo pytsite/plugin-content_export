@@ -9,10 +9,19 @@ __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
+_working = False
+
 
 def cron_1min():
     """'pytsite.cron.1min' event handler.
     """
+    global _working
+
+    if _working:
+        _logger.warn('Another instance of content export is still working')
+        return
+
+    _working = True
     max_errors = _reg.get('content_export.max_errors', 13)
     delay_errors = _reg.get('content_export.delay_errors', 120)
 
@@ -86,3 +95,5 @@ def cron_1min():
 
             finally:
                 exporter.save().unlock()
+
+    _working = False
