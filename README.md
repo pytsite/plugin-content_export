@@ -3,6 +3,11 @@
 
 ## Changelog
 
+
+### 0.2.3 (2017-02-28)
+Fixed processing of unexpected exceptions.
+
+
 ### 0.2.2 (2017-02-03)
 Added checking for another instance working stage.
 
