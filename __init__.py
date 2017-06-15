@@ -29,7 +29,7 @@ _events.listen('pytsite.cron.1min', _eh.cron_1min)
 # Admin sidebar menu
 m = 'content_export'
 _admin.sidebar.add_menu(sid='content', mid=m, title=__name__ + '@export',
-                        href=_router.ep_path('pytsite.odm_ui@browse', {'model': m}),
+                        href=_router.rule_path('pytsite.odm_ui@browse', {'model': m}),
                         icon='fa fa-bullhorn',
                         permissions=('pytsite.odm_auth.view.' + m, 'pytsite.odm_auth.view_own.' + m),
                         weight=100)
