@@ -1,4 +1,4 @@
-"""PytSite Content Export Plugin.
+"""PytSite Content Export Plugin
 """
 # Public API
 from . import _model as model, _error as error

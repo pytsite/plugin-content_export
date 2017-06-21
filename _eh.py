@@ -1,4 +1,4 @@
-"""PytSite Content Export Event Handlers.
+"""PytSite Content Export Plugin Event Handlers
 """
 from datetime import datetime as _datetime, timedelta as _timedelta
 from pytsite import reg as _reg, odm as _odm, logger as _logger
@@ -36,7 +36,7 @@ def cron_1min():
 
         for exporter in exporters_f.get():
             # Search for content entities which are hasn't been exported yet
-            content_f = _content.find(exporter.content_model) \
+            content_f = _content.find(exporter.content_model, language='*') \
                 .gte('publish_time', _datetime.now() - _timedelta(exporter.max_age)) \
                 .ninc('options.content_export', [str(exporter.id)]) \
                 .sort([('publish_time', _odm.I_ASC)])

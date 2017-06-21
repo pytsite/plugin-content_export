@@ -1,4 +1,4 @@
-"""PytSite Content Export Abstract Driver.
+"""PytSite Content Export Plugin Abstract Driver
 """
 from abc import ABC as _ABC, abstractmethod as _abstractmethod
 from frozendict import frozendict as _frozendict

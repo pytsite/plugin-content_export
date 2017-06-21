@@ -1,7 +1,11 @@
-# Content Export Plugin
+# PytSite Content Export Plugin
 
 
 ## Changelog
+
+
+### 0.2.5 (2017-06-21)
+Fixed content selection language issue.
 
 
 ### 0.2.4 (2017-06-15)

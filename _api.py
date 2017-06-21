@@ -1,4 +1,4 @@
-"""Poster Functions.
+"""PytSite Content Export Plugin API Functions
 """
 from frozendict import frozendict as _frozendict
 from . import _driver, _error

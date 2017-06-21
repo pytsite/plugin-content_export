@@ -1,4 +1,4 @@
-"""Description.
+"""PytSite Content Export Plugin Errors
 """
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'

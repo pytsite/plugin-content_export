@@ -1,4 +1,4 @@
-"""Content Export Widgets.
+"""PytSite Content Export Plugin Widgets
 """
 from pytsite import widget as _widget, lang as _lang
 from ._api import get_drivers as _get_drivers
