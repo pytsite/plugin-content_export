@@ -3,7 +3,7 @@
 from datetime import datetime as _datetime
 from frozendict import frozendict as _frozendict
 from pytsite import odm_ui as _odm_ui, auth as _auth, odm as _odm, router as _router, widget as _widget, \
-    util as _util, form as _form, lang as _lang, auth_storage_odm as _auth_storage_odm
+    util as _util, form as _form, lang as _lang, auth_storage_odm as _auth_storage_odm, auth_ui as _auth_ui
 from plugins import content as _content
 from . import _widget as _content_export_widget, _api
 
@@ -80,6 +80,10 @@ class ContentExport(_odm_ui.model.UIEntity):
     def add_tags(self) -> tuple:
         return self.f_get('add_tags')
 
+    def _pre_save(self):
+        if not self.owner:
+            self.f_set('owner', _auth.get_current_user())
+
     @classmethod
     def odm_ui_browser_setup(cls, browser):
         """Hook.
@@ -115,7 +119,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         enabled = '<span class="label label-success">' + self.t('word_yes') + '</span>' if self.enabled else ''
 
         if self.errors:
-            errors = '<span class="label label-danger" title="{}">{}</span>'\
+            errors = '<span class="label label-danger" title="{}">{}</span>' \
                 .format(_util.escape_html(self.last_error), self.errors)
         else:
             errors = ''
@@ -123,7 +127,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         paused_till = self.f_get('paused_till', fmt='pretty_date_time') if _datetime.now() < self.paused_till else ''
 
         return content_model, driver_desc, opts_desc, all_authors, w_images, max_age, enabled, \
-            errors, paused_till, self.owner.full_name
+               errors, paused_till, self.owner.full_name
 
     def odm_ui_m_form_setup(self, frm: _form.Form):
         """Hook.
@@ -203,6 +207,15 @@ class ContentExport(_odm_ui.model.UIEntity):
                 value=self.errors,
                 h_size='col-sm-1',
             ))
+
+            if _auth.get_current_user().is_admin:
+                frm.add_widget(_auth_ui.widget.UserSelect(
+                    weight=100,
+                    uid='owner',
+                    label=self.t('owner'),
+                    value=self.owner or _auth.get_current_user(),
+                    h_size='col-sm-4',
+                ))
 
         elif frm.step == 2:
             driver = _api.get_driver(_router.request().inp.get('driver'))

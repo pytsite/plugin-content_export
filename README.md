@@ -4,6 +4,10 @@
 ## Changelog
 
 
+### 0.2.6 (2017-08-02)
+Added widget to select owner of exporter.
+
+
 ### 0.2.5 (2017-06-21)
 Fixed content selection language issue.
 
