@@ -64,13 +64,12 @@ def cron_1min():
                     driver.export(entity=entity, exporter=exporter)
 
                     # Saving information that entity was exported
-                    with entity:
-                        entity_opts = dict(entity.options)
-                        if 'content_export' not in entity_opts:
-                            entity_opts['content_export'] = []
-                        entity_opts['content_export'].append(str(exporter.id))
-                        entity.f_set('options', entity_opts)
-                        entity.save()
+                    entity_opts = dict(entity.options)
+                    if 'content_export' not in entity_opts:
+                        entity_opts['content_export'] = []
+                    entity_opts['content_export'].append(str(exporter.id))
+                    entity.f_set('options', entity_opts)
+                    entity.save()
 
                     # Reset errors count to zero after each successful export
                     if exporter.errors:

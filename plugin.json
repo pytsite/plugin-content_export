@@ -1,6 +1,6 @@
 {
-  "name": "plugins.content_export",
-  "version": "0.2.7",
+  "name": "content_export",
+  "version": "1.0",
   "description": {
     "en": "Content export",
     "ru": "Экспорт контента",
