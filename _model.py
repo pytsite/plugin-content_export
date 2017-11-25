@@ -2,9 +2,9 @@
 """
 from datetime import datetime as _datetime
 from frozendict import frozendict as _frozendict
-from pytsite import odm_ui as _odm_ui, auth as _auth, odm as _odm, router as _router, widget as _widget, \
-    util as _util, form as _form, lang as _lang, auth_storage_odm as _auth_storage_odm, auth_ui as _auth_ui
-from plugins import content as _content
+from pytsite import router as _router, util as _util, lang as _lang
+from plugins import auth as _auth, odm as _odm, content as _content, auth_ui as _auth_ui, form as _form, \
+    auth_storage_odm as _auth_storage_odm, odm_ui as _odm_ui, widget as _widget
 from . import _widget as _content_export_widget, _api
 
 __author__ = 'Alexander Shepetko'
@@ -87,7 +87,7 @@ class ContentExport(_odm_ui.model.UIEntity):
     @classmethod
     def odm_ui_browser_setup(cls, browser):
         """Hook.
-        :type browser: pytsite.odm_ui._browser.Browser
+        :type browser: odm_ui._browser.Browser
         """
         browser.default_sort_field = 'driver'
 

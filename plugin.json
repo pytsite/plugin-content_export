@@ -1,6 +1,6 @@
 {
   "name": "content_export",
-  "version": "1.0.1",
+  "version": "2.0",
   "description": {
     "en": "Content export",
     "ru": "Экспорт контента",
@@ -15,7 +15,15 @@
   "requires": {
     "packages": [],
     "plugins": [
-      "content"
+      "admin",
+      "auth",
+      "auth_ui",
+      "auth_storage_odm",
+      "content",
+      "odm",
+      "odm_ui",
+      "permissions",
+      "widget"
     ]
   }
 }

@@ -6,8 +6,8 @@ from ._driver import Abstract as AbstractDriver
 from ._api import register_driver
 
 # Locally necessary imports
-from pytsite import admin as _admin, odm as _odm, events as _events, lang as _lang, router as _router, \
-    permissions as _permissions
+from pytsite import events as _events, lang as _lang, router as _router
+from plugins import permissions as _permissions, odm as _odm, admin as _admin
 from . import _model, _eh
 
 __author__ = 'Alexander Shepetko'
@@ -15,7 +15,7 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 # Resources
-_lang.register_package(__name__, alias='content_export')
+_lang.register_package(__name__)
 
 # Permission group
 _permissions.define_group('content_export', 'content_export@content_export')
@@ -29,7 +29,7 @@ _events.listen('pytsite.cron.1min', _eh.cron_1min)
 # Admin sidebar menu
 m = 'content_export'
 _admin.sidebar.add_menu(sid='content', mid=m, title=__name__ + '@export',
-                        href=_router.rule_path('pytsite.odm_ui@browse', {'model': m}),
+                        href=_router.rule_path('odm_ui@browse', {'model': m}),
                         icon='fa fa-bullhorn',
-                        permissions=('pytsite.odm_auth.view.' + m, 'pytsite.odm_auth.view_own.' + m),
+                        permissions=('odm_auth.view.' + m, 'odm_auth.view_own.' + m),
                         weight=100)

@@ -2,7 +2,7 @@
 """
 from abc import ABC as _ABC, abstractmethod as _abstractmethod
 from frozendict import frozendict as _frozendict
-from pytsite import widget as _widget
+from plugins import widget as _widget
 
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
@@ -39,6 +39,6 @@ class Abstract(_ABC):
         """ Performs export.
 
         :type entity: plugins.content.model.Content
-        :type exporter: pytsite.content_export.model.ContentExport
+        :type exporter: plugins.content_export.model.ContentExport
         """
         pass

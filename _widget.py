@@ -1,6 +1,7 @@
 """PytSite Content Export Plugin Widgets
 """
-from pytsite import widget as _widget, lang as _lang
+from pytsite import lang as _lang
+from plugins import widget as _widget
 from ._api import get_drivers as _get_drivers
 
 __author__ = 'Alexander Shepetko'
