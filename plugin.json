@@ -1,6 +1,6 @@
 {
   "name": "content_export",
-  "version": "2.0",
+  "version": "2.1",
   "description": {
     "en": "Content export",
     "ru": "Экспорт контента",
@@ -20,6 +20,7 @@
       "auth_ui",
       "auth_storage_odm",
       "content",
+      "font_awesome",
       "odm",
       "odm_ui",
       "permissions",
