@@ -78,7 +78,7 @@ def cron_1min():
 
                 # Store info about error
                 exporter.f_set('last_error', str(e))
-                _logger.error(str(e), exc_info=e, stack_info=True)
+                _logger.error(e)
 
                 if exporter.errors >= _MAX_ERRORS:
                     # Disable if maximum errors count reached

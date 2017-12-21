@@ -14,9 +14,9 @@ if _plugman.is_installed(__name__):
 
 
 def plugin_load():
-    from pytsite import events, lang, router
-    from plugins import permissions, odm, admin
-    from . import _model, _eh
+    from pytsite import lang
+    from plugins import permissions, odm
+    from . import _model
 
     # Resources
     lang.register_package(__name__)
@@ -27,8 +27,11 @@ def plugin_load():
     # ODM models
     odm.register_model('content_export', _model.ContentExport)
 
-    # Event handlers
-    events.listen('pytsite.cron@1min', _eh.cron_1min)
+
+def plugin_load_uwsgi():
+    from pytsite import router, cron
+    from plugins import admin
+    from . import _eh
 
     # Admin sidebar menu
     m = 'content_export'
@@ -37,3 +40,6 @@ def plugin_load():
                            icon='fa fa-bullhorn',
                            permissions=('odm_auth.view.' + m, 'odm_auth.view_own.' + m),
                            weight=100)
+
+    # Event handlers
+    cron.every_min(_eh.cron_1min)
