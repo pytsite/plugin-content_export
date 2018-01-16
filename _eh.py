@@ -1,13 +1,13 @@
 """PytSite Content Export Plugin Event Handlers
 """
-from datetime import datetime as _datetime, timedelta as _timedelta
-from pytsite import reg as _reg, logger as _logger, cache as _cache
-from plugins import content as _content, odm as _odm
-from . import _error, _api
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from datetime import datetime as _datetime, timedelta as _timedelta
+from pytsite import reg as _reg, logger as _logger, cache as _cache
+from plugins import content as _content, odm as _odm, auth as _auth
+from . import _error, _api
 
 _MAX_ERRORS = _reg.get('content_export.max_errors', 13)
 _DELAY_ERRORS = _reg.get('content_export.delay_errors', 120)
@@ -16,14 +16,12 @@ _CACHE = _cache.create_pool('content_export')
 
 def cron_1min():
     """'pytsite.cron.1min' event handler.
-
-    FIXME: there is no checking if an another instance of exporter currently working
     """
     if _CACHE.has('working'):
         _logger.warn('Another instance of content export is currently working')
         return
 
-    _CACHE.put('working', True, 300)  # 5 minutes
+    _CACHE.put('working', True, 3600)  # 10 minutes
 
     exporters_f = _odm.find('content_export') \
         .eq('enabled', True) \
@@ -60,13 +58,17 @@ def cron_1min():
                 # Ask driver to perform export
                 driver.export(entity=entity, exporter=exporter)
 
-                # Saving information that entity was exported
+                # Update information that entity was exported
                 entity_opts = dict(entity.options)
                 if 'content_export' not in entity_opts:
                     entity_opts['content_export'] = []
                 entity_opts['content_export'].append(str(exporter.id))
                 entity.f_set('options', entity_opts)
+
+                # Save exported entity
+                _auth.switch_user_to_system()
                 entity.save()
+                _auth.restore_user()
 
                 # Reset errors count to zero after each successful export
                 if exporter.errors:
@@ -88,7 +90,9 @@ def cron_1min():
                     exporter.f_set('paused_till', _datetime.now() + _timedelta(minutes=_DELAY_ERRORS))
 
                 # Save exporter
+                _auth.switch_user_to_system()
                 exporter.save()
+                _auth.restore_user()
 
                 # Stop iterating over entities and go on with new exporter
                 break

@@ -4,13 +4,10 @@ __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import plugman as _plugman
-
-if _plugman.is_installed(__name__):
-    # Public API
-    from . import _model as model, _error as error
-    from ._driver import Abstract as AbstractDriver
-    from ._api import register_driver
+# Public API
+from . import _model as model, _error as error
+from ._driver import Abstract as AbstractDriver
+from ._api import register_driver
 
 
 def plugin_load():

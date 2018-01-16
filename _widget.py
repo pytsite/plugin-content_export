@@ -1,17 +1,18 @@
 """PytSite Content Export Plugin Widgets
 """
-from pytsite import lang as _lang
-from plugins import widget as _widget
-from ._api import get_drivers as _get_drivers
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from pytsite import lang as _lang
+from plugins import widget as _widget
+from ._api import get_drivers as _get_drivers
 
 
 class DriverSelect(_widget.select.Select):
     """Content Export Driver Select Widget.
     """
+
     def __init__(self, uid: str, **kwargs):
         """Init.
         """

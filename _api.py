@@ -1,11 +1,11 @@
 """PytSite Content Export Plugin API Functions
 """
-from frozendict import frozendict as _frozendict
-from . import _driver, _error
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from frozendict import frozendict as _frozendict
+from . import _driver, _error
 
 _drivers = {}
 

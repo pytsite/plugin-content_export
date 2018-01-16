@@ -1,12 +1,12 @@
 """PytSite Content Export Plugin Abstract Driver
 """
-from abc import ABC as _ABC, abstractmethod as _abstractmethod
-from frozendict import frozendict as _frozendict
-from plugins import widget as _widget
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from abc import ABC as _ABC, abstractmethod as _abstractmethod
+from frozendict import frozendict as _frozendict
+from plugins import widget as _widget
 
 
 class Abstract(_ABC):
