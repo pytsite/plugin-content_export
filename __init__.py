@@ -33,9 +33,9 @@ def plugin_load_uwsgi():
     # Admin sidebar menu
     m = 'content_export'
     admin.sidebar.add_menu(sid='content', mid=m, title=__name__ + '@export',
-                           href=router.rule_path('odm_ui@browse', {'model': m}),
+                           path=router.rule_path('odm_ui@browse', {'model': m}),
                            icon='fa fa-bullhorn',
-                           permissions=('odm_auth.view.' + m, 'odm_auth.view_own.' + m),
+                           permissions=('odm_auth@view.' + m, 'odm_auth@view_own.' + m),
                            weight=100)
 
     # Event handlers
