@@ -24,13 +24,13 @@ class Abstract(_ABC):
 
     @_abstractmethod
     def get_options_description(self, driver_options: _frozendict) -> str:
-        """Get human readable driver options.
+        """Get human readable driver options
         """
         pass
 
     @_abstractmethod
-    def get_settings_widget(self, driver_options: _frozendict) -> _widget.Abstract:
-        """Add widgets to the settings form of the driver.
+    def get_settings_widget(self, driver_options: _frozendict, form_url: str) -> _widget.Abstract:
+        """Add widgets to the settings form of the driver
         """
         pass
 

@@ -135,9 +135,9 @@ class ContentExport(_odm_ui.model.UIEntity):
         frm.steps = 2
 
     def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
-        """Hook.
+        """Hook
         """
-        if frm.step == 1:
+        if frm.current_step == 1:
             frm.add_widget(_widget.select.Checkbox(
                 weight=10,
                 uid='enabled',
@@ -217,9 +217,22 @@ class ContentExport(_odm_ui.model.UIEntity):
                     h_size='col-sm-4',
                 ))
 
-        elif frm.step == 2:
+        elif frm.current_step == 2:
+            eid = str(self.id) if self.id else 0
+            form_url = _router.rule_url(
+                'odm_ui@m_form',
+                rule_args={
+                    'model': self.model,
+                    'eid': eid,
+                    '__redirect': frm.redirect,
+                },
+                fragment={
+                    '__form_uid': frm.uid,
+                    '__form_step': frm.current_step
+                }
+            )
             driver = _api.get_driver(_router.request().inp.get('driver'))
-            settings_widget = driver.get_settings_widget(self.driver_opts)
+            settings_widget = driver.get_settings_widget(self.driver_opts, form_url)
             settings_widget.uid = 'driver_opts'
             frm.add_widget(settings_widget)
 
