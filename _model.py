@@ -133,6 +133,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         """Hook.
         """
         frm.steps = 2
+        frm.update_location_hash = True
 
     def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
         """Hook

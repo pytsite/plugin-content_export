@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.4 (2018-03-18)
+
+Support for `form-2.1`.
+
+
 ### 2.3 (2018-03-15)
 
 Support for `form-2.0`.
