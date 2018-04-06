@@ -209,7 +209,7 @@ class ContentExport(_odm_ui.model.UIEntity):
                 h_size='col-sm-1',
             ))
 
-            if _auth.get_current_user().is_admin:
+            if _auth.get_current_user().is_admin_or_dev:
                 frm.add_widget(_auth_ui.widget.UserSelect(
                     weight=100,
                     uid='owner',
