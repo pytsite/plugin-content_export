@@ -80,7 +80,9 @@ class ContentExport(_odm_ui.model.UIEntity):
     def add_tags(self) -> tuple:
         return self.f_get('add_tags')
 
-    def _pre_save(self):
+    def _pre_save(self, **kwargs):
+        super()._pre_save(**kwargs)
+
         if not self.owner:
             self.f_set('owner', _auth.get_current_user())
 

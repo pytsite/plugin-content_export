@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.4.2 (2018-04-08)
+
+Parent method call arguments fixed.
+
+
 ### 2.4.1 (2018-04-06)
 
 Permissions checking fixed.
