@@ -1,6 +1,6 @@
 {
   "name": "content_export",
-  "version": "2.4.2",
+  "version": "2.5",
   "description": {
     "en": "Content export",
     "ru": "Экспорт контента",
@@ -22,7 +22,7 @@
       "font_awesome",
       "form>=2.1",
       "odm",
-      "odm_ui",
+      "odm_ui>=3.0",
       "permissions",
       "widget"
     ]

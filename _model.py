@@ -223,7 +223,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         elif frm.current_step == 2:
             eid = str(self.id) if self.id else 0
             form_url = _router.rule_url(
-                'odm_ui@m_form',
+                'odm_ui@admin_m_form',
                 rule_args={
                     'model': self.model,
                     'eid': eid,
