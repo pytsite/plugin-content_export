@@ -66,9 +66,7 @@ def cron_1min():
                 entity.f_set('options', entity_opts)
 
                 # Save exported entity
-                _auth.switch_user_to_system()
                 entity.save()
-                _auth.restore_user()
 
                 # Reset errors count to zero after each successful export
                 if exporter.errors:
@@ -90,9 +88,7 @@ def cron_1min():
                     exporter.f_set('paused_till', _datetime.now() + _timedelta(minutes=_DELAY_ERRORS))
 
                 # Save exporter
-                _auth.switch_user_to_system()
                 exporter.save()
-                _auth.restore_user()
 
                 # Stop iterating over entities and go on with new exporter
                 break

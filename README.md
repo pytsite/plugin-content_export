@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.6 (2018-04-25)
+
+Support of `auth-3.0`.
+
+
 ### 2.5 (2018-04-14)
 
 Support of `odm_ui-3.0`.
