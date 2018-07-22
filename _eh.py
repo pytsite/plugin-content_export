@@ -21,7 +21,7 @@ def cron_1min():
         _logger.warn('Another instance of content export is currently working')
         return
 
-    _CACHE.put('working', True, 3600)  # 10 minutes
+    _CACHE.put('working', True, 600)
 
     exporters_f = _odm.find('content_export') \
         .eq('enabled', True) \
