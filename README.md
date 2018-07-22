@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.6.1 (2018-07-22)
+
+Permissions issue fixed.
+
+
 ### 2.6 (2018-04-25)
 
 Support of `auth-3.0`.
