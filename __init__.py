@@ -1,6 +1,6 @@
 """PytSite Content Export Plugin
 """
-__author__ = 'Alexander Shepetko'
+__author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
@@ -32,11 +32,19 @@ def plugin_load_uwsgi():
 
     # Admin sidebar menu
     m = 'content_export'
-    admin.sidebar.add_menu(sid='content', mid=m, title=__name__ + '@export',
-                           path=router.rule_path('odm_ui@admin_browse', {'model': m}),
-                           icon='fa fa-bullhorn',
-                           permissions=('odm_auth@view.' + m, 'odm_auth@view_own.' + m),
-                           weight=100)
+    admin.sidebar.add_menu(
+        sid='content',
+        mid=m,
+        title=__name__ + '@export',
+        path=router.rule_path('odm_ui@admin_browse', {'model': m}),
+        icon='fa fa-bullhorn',
+        permissions=(
+            'odm_auth@create.content_export',
+            'odm_auth@modify.content_export', 'odm_auth@modify_own.content_export',
+            'odm_auth@delete.content_export', 'odm_auth@delete_own.content_export',
+        ),
+        weight=100
+    )
 
     # Event handlers
     cron.every_min(_eh.cron_1min)
