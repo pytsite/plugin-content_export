@@ -129,7 +129,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         paused_till = self.f_get('paused_till', fmt='pretty_date_time') if _datetime.now() < self.paused_till else ''
 
         return content_model, driver_desc, opts_desc, all_authors, w_images, max_age, enabled, \
-               errors, paused_till, self.owner.full_name
+               errors, paused_till, self.owner.first_last_name
 
     def odm_ui_m_form_setup(self, frm: _form.Form):
         """Hook.

@@ -3,6 +3,11 @@
 
 ## Changelog
 
+### 2.7.1 (2018-08-23)
+
+User's `full_name` usage replaced with `first_last_name`.
+
+
 ### 2.7 (2018-08-09)
 
 Support of `odm_auth-1.9`.
