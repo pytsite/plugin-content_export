@@ -11,12 +11,8 @@ from ._api import register_driver
 
 
 def plugin_load():
-    from pytsite import lang
     from plugins import permissions, odm
     from . import _model
-
-    # Resources
-    lang.register_package(__name__)
 
     # Permission group
     permissions.define_group('content_export', 'content_export@content_export')
@@ -25,7 +21,7 @@ def plugin_load():
     odm.register_model('content_export', _model.ContentExport)
 
 
-def plugin_load_uwsgi():
+def plugin_load_wsgi():
     from pytsite import router, cron
     from plugins import admin
     from . import _eh

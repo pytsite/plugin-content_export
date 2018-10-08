@@ -3,6 +3,11 @@
 
 ## Changelog
 
+### 3.0 (2018-10-08)
+
+Support of `pytsite-8.x`.
+
+
 ### 2.7.1 (2018-08-23)
 
 User's `full_name` usage replaced with `first_last_name`.
