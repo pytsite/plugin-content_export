@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.2 (2018-11-14)
+
+Support of `odm_ui-5.x`.
+
+
 ### 3.1 (2018-10-22)
 
 Support of `widget-4.x`.
