@@ -86,8 +86,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         if not self.owner:
             self.f_set('owner', _auth.get_current_user())
 
-    @classmethod
-    def odm_ui_browser_setup(cls, browser):
+    def odm_ui_browser_setup(self, browser):
         """Hook.
         :type browser: odm_ui._browser.Browser
         """
