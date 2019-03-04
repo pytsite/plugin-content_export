@@ -1,6 +1,6 @@
 {
   "name": "content_export",
-  "version": "3.4",
+  "version": "3.5",
   "description": {
     "en": "Content export",
     "ru": "Экспорт контента",
@@ -13,18 +13,18 @@
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": "8.x",
+    "pytsite": ">=8.9",
     "plugins": {
-      "admin": "2.x",
-      "auth": "3.x",
-      "auth_ui": "4.x",
-      "auth_storage_odm": "4.x",
-      "content": "5.x",
-      "form": "5.x",
-      "odm": "5.x",
-      "odm_ui": "7.x",
-      "permissions": "1.x",
-      "widget": "4.x"
+      "admin": "^2.0",
+      "auth": "^3.0",
+      "auth_ui": "^4.0",
+      "auth_storage_odm": "^4.0",
+      "content": "^5.0",
+      "form": "^5.0",
+      "odm": "^6.0",
+      "odm_ui": "^7.0",
+      "permissions": "^1.0",
+      "widget": "^4.0"
     }
   }
 }

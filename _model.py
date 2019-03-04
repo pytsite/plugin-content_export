@@ -19,12 +19,12 @@ class ContentExport(_odm_ui.model.UIEntity):
     def _setup_fields(self):
         """Hook.
         """
-        self.define_field(_odm.field.String('driver', required=True))
+        self.define_field(_odm.field.String('driver', is_required=True))
         self.define_field(_odm.field.Dict('driver_opts'))
-        self.define_field(_odm.field.String('content_model', required=True))
+        self.define_field(_odm.field.String('content_model', is_required=True))
         self.define_field(_odm.field.Bool('process_all_authors', default=True))
         self.define_field(_odm.field.Bool('with_images_only', default=True))
-        self.define_field(_auth_storage_odm.field.User('owner', required=True))
+        self.define_field(_auth_storage_odm.field.User('owner', is_required=True))
         self.define_field(_odm.field.Bool('enabled', default=True))
         self.define_field(_odm.field.Integer('errors'))
         self.define_field(_odm.field.String('last_error'))
@@ -80,8 +80,8 @@ class ContentExport(_odm_ui.model.UIEntity):
     def add_tags(self) -> tuple:
         return self.f_get('add_tags')
 
-    def _pre_save(self, **kwargs):
-        super()._pre_save(**kwargs)
+    def _on_pre_save(self, **kwargs):
+        super()._on_pre_save(**kwargs)
 
         if not self.owner:
             self.f_set('owner', _auth.get_current_user())
