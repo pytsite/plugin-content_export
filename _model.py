@@ -105,7 +105,7 @@ class ContentExport(_odm_ui.model.UIEntity):
             ('owner', 'content_export@owner')
         ]
 
-    def odm_ui_browser_row(self) -> tuple:
+    def odm_ui_browser_row(self) -> dict:
         """Hook.
         """
         driver = _api.get_driver(self.driver)
@@ -127,11 +127,21 @@ class ContentExport(_odm_ui.model.UIEntity):
 
         paused_till = self.f_get('paused_till', fmt='pretty_date_time') if _datetime.now() < self.paused_till else ''
 
-        return content_model, driver_desc, opts_desc, all_authors, w_images, max_age, enabled, \
-               errors, paused_till, self.owner.first_last_name
+        return {
+            'content_model': content_model,
+            'driver': driver_desc,
+            'driver_opts': opts_desc,
+            'process_all_authors': all_authors,
+            'with_images_only': w_images,
+            'max_age': max_age,
+            'enabled': enabled,
+            'errors': errors,
+            'paused_till': paused_till,
+            'owner': self.owner.first_last_name,
+        }
 
     def odm_ui_m_form_setup(self, frm: _form.Form):
-        """Hook.
+        """Hook
         """
         frm.steps = 2
         frm.update_location_hash = True

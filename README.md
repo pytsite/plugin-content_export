@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.5.1 (2019-03-27)
+
+Invalid return value type fixed in `ContentExport` model.
+
+
 ### 3.5 (2019-03-04)
 
 Support of `odm-6.0`.
