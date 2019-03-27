@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.5.2 (2019-03-27)
+
+Form building error fixed.
+
+
 ### 3.5.1 (2019-03-27)
 
 Invalid return value type fixed in `ContentExport` model.

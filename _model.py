@@ -238,10 +238,7 @@ class ContentExport(_odm_ui.model.UIEntity):
                     'eid': eid,
                     '__redirect': frm.redirect,
                 },
-                fragment={
-                    '__form_uid': frm.uid,
-                    '__form_step': frm.current_step
-                }
+                fragment='__form_uid={}&__form_step={}'.format(frm.uid, frm.current_step),
             )
             driver = _api.get_driver(_router.request().inp.get('driver'))
             settings_widget = driver.get_settings_widget(self.driver_opts, form_url)
