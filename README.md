@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.6 (2019-04-10)
+
+Support of `content-6.0`.
+
+
 ### 3.5.2 (2019-03-27)
 
 Form building error fixed.
