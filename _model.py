@@ -4,40 +4,41 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from datetime import datetime as _datetime
-from frozendict import frozendict as _frozendict
-from pytsite import router as _router, util as _util, lang as _lang
-from plugins import auth as _auth, odm as _odm, content as _content, auth_ui as _auth_ui, form as _form, \
-    auth_storage_odm as _auth_storage_odm, odm_ui as _odm_ui, widget as _widget
-from . import _widget as _content_export_widget, _api
+from datetime import datetime
+from frozendict import frozendict
+from pytsite import router, util, lang
+from plugins import auth, odm, content, auth_ui, form, auth_storage_odm, odm_ui, widget
+from ._api import get_driver
+from ._widget import DriverSelect as DriverSelectWidget
 
 
-class ContentExport(_odm_ui.model.UIEntity):
-    """oAuth Account Model.
+class ContentExport(odm_ui.model.UIEntity):
+    """Content Export ODM Model
     """
 
     def _setup_fields(self):
         """Hook.
         """
-        self.define_field(_odm.field.String('driver', is_required=True))
-        self.define_field(_odm.field.Dict('driver_opts'))
-        self.define_field(_odm.field.String('content_model', is_required=True))
-        self.define_field(_odm.field.Bool('process_all_authors', default=True))
-        self.define_field(_odm.field.Bool('with_images_only', default=True))
-        self.define_field(_auth_storage_odm.field.User('owner', is_required=True))
-        self.define_field(_odm.field.Bool('enabled', default=True))
-        self.define_field(_odm.field.Integer('errors'))
-        self.define_field(_odm.field.String('last_error'))
-        self.define_field(_odm.field.Integer('max_age', default=14))
-        self.define_field(_odm.field.DateTime('paused_till'))
-        self.define_field(_odm.field.List('add_tags'))
+        self.define_field(odm.field.String('driver', is_required=True))
+        self.define_field(odm.field.Dict('driver_opts'))
+        self.define_field(odm.field.String('content_model', is_required=True))
+        self.define_field(odm.field.Bool('process_all_authors', default=True))
+        self.define_field(odm.field.Bool('with_images_only', default=True))
+        self.define_field(auth_storage_odm.field.User('owner', is_required=True))
+        self.define_field(auth_storage_odm.field.User('author', is_required=True))  # odm_auth requirement
+        self.define_field(odm.field.Bool('enabled', default=True))
+        self.define_field(odm.field.Integer('errors'))
+        self.define_field(odm.field.String('last_error'))
+        self.define_field(odm.field.Integer('max_age', default=14))
+        self.define_field(odm.field.DateTime('paused_till'))
+        self.define_field(odm.field.List('add_tags'))
 
     @property
     def driver(self) -> str:
         return self.f_get('driver')
 
     @property
-    def driver_opts(self) -> _frozendict:
+    def driver_opts(self) -> frozendict:
         return self.f_get('driver_opts')
 
     @property
@@ -45,8 +46,12 @@ class ContentExport(_odm_ui.model.UIEntity):
         return self.f_get('content_model')
 
     @property
-    def owner(self) -> _auth.model.AbstractUser:
+    def owner(self) -> auth.model.AbstractUser:
         return self.f_get('owner')
+
+    @property
+    def author(self) -> auth.model.AbstractUser:
+        return self.f_get('author')
 
     @property
     def process_all_authors(self) -> bool:
@@ -73,7 +78,7 @@ class ContentExport(_odm_ui.model.UIEntity):
         return self.f_get('max_age')
 
     @property
-    def paused_till(self) -> _datetime:
+    def paused_till(self) -> datetime:
         return self.f_get('paused_till')
 
     @property
@@ -84,7 +89,11 @@ class ContentExport(_odm_ui.model.UIEntity):
         super()._on_pre_save(**kwargs)
 
         if not self.owner:
-            self.f_set('owner', _auth.get_current_user())
+            self.f_set('owner', auth.get_current_user())
+
+        # odm_auth requirement
+        if self.author != self.owner:
+            self.f_set('author', self.owner)
 
     def odm_ui_browser_setup(self, browser):
         """Hook.
@@ -108,9 +117,9 @@ class ContentExport(_odm_ui.model.UIEntity):
     def odm_ui_browser_row(self) -> dict:
         """Hook.
         """
-        driver = _api.get_driver(self.driver)
-        content_model = _content.get_model_title(self.content_model)
-        driver_desc = _lang.t(driver.get_description())
+        driver = get_driver(self.driver)
+        content_model = content.get_model_title(self.content_model)
+        driver_desc = lang.t(driver.get_description())
         opts_desc = driver.get_options_description(self.driver_opts)
         all_authors = '<span class="label label-success">' + self.t('word_yes') + '</span>' \
             if self.process_all_authors else ''
@@ -121,11 +130,11 @@ class ContentExport(_odm_ui.model.UIEntity):
 
         if self.errors:
             errors = '<span class="label label-danger" title="{}">{}</span>' \
-                .format(_util.escape_html(self.last_error), self.errors)
+                .format(util.escape_html(self.last_error), self.errors)
         else:
             errors = ''
 
-        paused_till = self.f_get('paused_till', fmt='pretty_date_time') if _datetime.now() < self.paused_till else ''
+        paused_till = self.f_get('paused_till', fmt='pretty_date_time') if datetime.now() < self.paused_till else ''
 
         return {
             'content_model': content_model,
@@ -140,38 +149,38 @@ class ContentExport(_odm_ui.model.UIEntity):
             'owner': self.owner.first_last_name,
         }
 
-    def odm_ui_m_form_setup(self, frm: _form.Form):
+    def odm_ui_m_form_setup(self, frm: form.Form):
         """Hook
         """
         frm.steps = 2
         frm.update_location_hash = True
 
-    def odm_ui_m_form_setup_widgets(self, frm: _form.Form):
+    def odm_ui_m_form_setup_widgets(self, frm: form.Form):
         """Hook
         """
         if frm.current_step == 1:
-            frm.add_widget(_widget.select.Checkbox(
+            frm.add_widget(widget.select.Checkbox(
                 weight=10,
                 uid='enabled',
                 label=self.t('enabled'),
                 value=self.enabled,
             ))
 
-            frm.add_widget(_widget.select.Checkbox(
+            frm.add_widget(widget.select.Checkbox(
                 weight=20,
                 uid='process_all_authors',
                 label=self.t('process_all_authors'),
                 value=self.process_all_authors,
             ))
 
-            frm.add_widget(_widget.select.Checkbox(
+            frm.add_widget(widget.select.Checkbox(
                 weight=30,
                 uid='with_images_only',
                 label=self.t('with_images_only'),
                 value=self.with_images_only,
             ))
 
-            frm.add_widget(_content.widget.ModelSelect(
+            frm.add_widget(content.widget.ModelSelect(
                 weight=40,
                 uid='content_model',
                 label=self.t('content_model'),
@@ -180,7 +189,7 @@ class ContentExport(_odm_ui.model.UIEntity):
                 required=True,
             ))
 
-            frm.add_widget(_content_export_widget.DriverSelect(
+            frm.add_widget(DriverSelectWidget(
                 weight=50,
                 uid='driver',
                 label=self.t('driver'),
@@ -189,7 +198,7 @@ class ContentExport(_odm_ui.model.UIEntity):
                 required=True,
             ))
 
-            frm.add_widget(_widget.input.Integer(
+            frm.add_widget(widget.input.Integer(
                 weight=60,
                 uid='max_age',
                 label=self.t('max_age'),
@@ -197,14 +206,14 @@ class ContentExport(_odm_ui.model.UIEntity):
                 h_size='col-sm-1',
             ))
 
-            frm.add_widget(_widget.input.Tokens(
+            frm.add_widget(widget.input.Tokens(
                 weight=70,
                 uid='add_tags',
                 label=self.t('additional_tags'),
                 value=self.add_tags,
             ))
 
-            frm.add_widget(_widget.select.DateTime(
+            frm.add_widget(widget.select.DateTime(
                 weight=80,
                 uid='paused_till',
                 label=self.t('paused_till'),
@@ -212,7 +221,7 @@ class ContentExport(_odm_ui.model.UIEntity):
                 h_size='col-sm-5 col-md-4 col-lg-3',
             ))
 
-            frm.add_widget(_widget.input.Integer(
+            frm.add_widget(widget.input.Integer(
                 weight=90,
                 uid='errors',
                 label=self.t('errors'),
@@ -220,18 +229,18 @@ class ContentExport(_odm_ui.model.UIEntity):
                 h_size='col-sm-1',
             ))
 
-            if _auth.get_current_user().is_admin:
-                frm.add_widget(_auth_ui.widget.UserSelect(
+            if auth.get_current_user().is_admin:
+                frm.add_widget(auth_ui.widget.UserSelect(
                     weight=100,
                     uid='owner',
                     label=self.t('owner'),
-                    value=self.owner or _auth.get_current_user(),
+                    value=self.owner or auth.get_current_user(),
                     h_size='col-sm-4',
                 ))
 
         elif frm.current_step == 2:
             eid = str(self.id) if self.id else 0
-            form_url = _router.rule_url(
+            form_url = router.rule_url(
                 'odm_ui@admin_m_form',
                 rule_args={
                     'model': self.model,
@@ -240,7 +249,7 @@ class ContentExport(_odm_ui.model.UIEntity):
                 },
                 fragment='__form_uid={}&__form_step={}'.format(frm.uid, frm.current_step),
             )
-            driver = _api.get_driver(_router.request().inp.get('driver'))
+            driver = get_driver(router.request().inp.get('driver'))
             settings_widget = driver.get_settings_widget(self.driver_opts, form_url)
             settings_widget.uid = 'driver_opts'
             frm.add_widget(settings_widget)
@@ -248,4 +257,4 @@ class ContentExport(_odm_ui.model.UIEntity):
     def odm_ui_mass_action_entity_description(self) -> str:
         """Get description for mass action form.
         """
-        return _api.get_driver(self.driver).get_options_description(self.driver_opts)
+        return get_driver(self.driver).get_options_description(self.driver_opts)

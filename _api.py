@@ -4,7 +4,7 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from frozendict import frozendict as _frozendict
+from frozendict import frozendict
 from . import _driver, _error
 
 _drivers = {}
@@ -30,7 +30,7 @@ def get_driver(name: str) -> _driver.Abstract:
     return _drivers[name]
 
 
-def get_drivers() -> _frozendict:
+def get_drivers() -> frozendict:
     """Get registered drivers.
     """
-    return _frozendict(_drivers)
+    return frozendict(_drivers)
