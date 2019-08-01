@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.8 (2019-08-01)
+
+Support of `content-7.0`.
+
+
 ### 3.7 (2019-06-04)
 
 Support of `odm_auth-4.0`.
